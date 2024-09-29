@@ -1,11 +1,11 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
+import { sleep } from "@/utils";
 
-const http = axios.create({
-  baseURL,
-});
+const baseURL = import.meta.env.VITE_API_URL || "/api";
+
+const http = axios.create({ baseURL });
 
 const getToken = () => {
   if (typeof window === "undefined") return;
@@ -23,7 +23,7 @@ http.interceptors.request.use(async (request) => {
   return request;
 });
 
-http.handleError = (error) => {
+http.handleError = async (error) => {
   if (!axios.isAxiosError(error)) {
     return toast.error("An unexpected error occurred");
   }
@@ -33,17 +33,21 @@ http.handleError = (error) => {
   }
 
   if (error.response.status === 401) {
-    return toast.error("Unauthorized");
+    localStorage.removeItem("token");
+    toast.error("Unauthorized");
+    await sleep(1000);
+    location.replace("/login");
   }
 
   if (error.response.status === 403) {
     return toast.error("Forbidden");
   }
 
-  const { message, errors } = error.response.data;
+  const { errors, message } = error.response.data;
 
   return toast.error(message, {
-    description: JSON.stringify(errors, null, 2),
+    description: errors && errors.join("\n"),
+    descriptionClassName: "whitespace-pre",
   });
 };
 
