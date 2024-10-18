@@ -13,13 +13,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 
-import { User } from "@/types";
+import { Person } from "@/types";
 
-type DataType = User;
-const url = "/users";
-const title = "Users";
+type DataType = Person;
+const url = "/people";
+const title = "Kişiler";
 
-const Users = () => {
+const ItemsTable = () => {
   const navigate = useNavigate();
 
   const [filteredItems, setFilteredItems] = React.useState<DataType[]>([]);
@@ -47,14 +47,14 @@ const Users = () => {
   };
 
   const columns = [
-    { key: "id", label: "ID" },
+    { key: "id", label: "#" },
     {
       key: "name",
-      label: "Name",
+      label: "İsim",
     },
     {
       key: "createdAt",
-      label: "Created At",
+      label: "Oluşturulma Tarihi",
     },
   ];
 
@@ -115,4 +115,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default ItemsTable;
