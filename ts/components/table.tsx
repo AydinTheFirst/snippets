@@ -33,12 +33,20 @@ const ItemsTable = () => {
 
   const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!items) return;
-
     const value = e.target.value.toLowerCase();
-    const filteredData = items.filter((item) =>
-      item.displayName.toLowerCase().includes(value),
-    );
 
+    const fieldsToSearch: Array<keyof DataType> = [
+      "firstName",
+      "lastName",
+      "aka",
+    ];
+
+    const filteredData = items.filter((item) =>
+      fieldsToSearch.some(
+        (field) =>
+          item[field] && item[field].toString().toLowerCase().includes(value),
+      ),
+    );
     setFilteredItems(filteredData);
   };
 
@@ -64,7 +72,7 @@ const ItemsTable = () => {
           createdAt: new Date(item.createdAt).toLocaleDateString(),
           id: i + 1,
           key: item.id,
-          name: item.displayName,
+          name: item.firstName,
         };
       })
     : [];
