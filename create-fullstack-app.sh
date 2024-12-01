@@ -3,14 +3,7 @@
 # Exit on any error
 set -e
 
-# Check if app name is provided
-if [ -z "$1" ]; then
-  echo "Please provide an app name"
-  echo "Usage: create-fullstack-app.sh <app-name>"
-  exit 1
-fi
-
-APP_NAME=$1
+APP_NAME="."
 
 # Ensure app name is valid
 if [[ ! "$APP_NAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
@@ -42,7 +35,7 @@ elif [ $pm == "yarn" ]; then
   yarn dlx create-turbo@latest $APP_NAME --example basic 
 else
   npx create-turbo@latest $APP_NAME --example basic
-fi 
+fi  # <-- Missing fi added here
 
 # Navigate to the new repo
 cd $APP_NAME
@@ -70,6 +63,8 @@ rm -rf apps/client/.git apps/server/.git
 # Install dependencies
 echo "Installing dependencies using $pm..."
 $pm install
+
+
 
 # Done
 echo "Done! 🚀 Your fullstack app '$APP_NAME' has been created."
