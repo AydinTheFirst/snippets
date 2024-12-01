@@ -3,7 +3,18 @@
 # Exit on any error
 set -e
 
-APP_NAME="."
+read -p "This script will create a new fullstack app using Turbo. Do you want to continue? (y/n): " confirm
+if [[ "$confirm" != "y" ]]; then
+  echo "Aborting."
+  exit 1
+fi
+
+# Read app name
+if [ -z "$1" ]; then
+  read -p "Enter the app name: " APP_NAME
+else
+  APP_NAME=$1
+fi
 
 # Ensure app name is valid
 if [[ ! "$APP_NAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
@@ -35,7 +46,7 @@ elif [ $pm == "yarn" ]; then
   yarn dlx create-turbo@latest $APP_NAME --example basic 
 else
   npx create-turbo@latest $APP_NAME --example basic
-fi  # <-- Missing fi added here
+fi
 
 # Navigate to the new repo
 cd $APP_NAME
@@ -63,8 +74,6 @@ rm -rf apps/client/.git apps/server/.git
 # Install dependencies
 echo "Installing dependencies using $pm..."
 $pm install
-
-
 
 # Done
 echo "Done! 🚀 Your fullstack app '$APP_NAME' has been created."
