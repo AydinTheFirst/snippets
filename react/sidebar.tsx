@@ -14,7 +14,8 @@ import {
 } from "@heroui/react";
 import { LucideLogOut, LucideSidebar } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useMedia } from "react-use";
 
 import ToggleTheme from "@/components/ToggleTheme";
 
@@ -185,6 +186,8 @@ const Header = () => {
 
 export default function AppSidebar(props: AppSidebarProps) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const isMobile = useMedia("(max-width: 768px)");
+  const location = useLocation();
 
   const toggleSidebar = () => setIsOpen((open) => !open);
 
@@ -193,6 +196,19 @@ export default function AppSidebar(props: AppSidebarProps) {
 
     return () => document.body.classList.remove("overflow-hidden");
   }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("isSidebarOpen", JSON.stringify(!isOpen));
+  }, [isOpen]);
+
+  React.useEffect(() => {
+    const isSidebarOpen = JSON.parse(
+      localStorage.getItem("isSidebarOpen") || "false"
+    );
+
+    if (isMobile) return setIsOpen(false);
+    setIsOpen(isSidebarOpen);
+  }, [isMobile, location]);
 
   return (
     <SidebarContext.Provider value={{ isOpen, setIsOpen, toggleSidebar }}>
