@@ -9,10 +9,16 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   { ignores: ["dist"] },
   {
+    files: ["**/*.{ts,tsx}"],
+    plugins: {perfectionist},
+    rules: {
+      "perfectionist/sort-imports": ["error", { internalPattern: ["^@/.+"] }],
+    },
+  },
+  {
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
-      perfectionist.configs["recommended-natural"],
     ],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
@@ -28,29 +34,6 @@ export default tseslint.config(
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
-      ],
-      "perfectionist/sort-imports": [
-        "error",
-        {
-          type: "alphabetical",
-          order: "asc",
-          ignoreCase: true,
-          internalPattern: ["@/**"],
-          newlinesBetween: "always",
-          maxLineLength: undefined,
-          groups: [
-            "type",
-            ["builtin", "external"],
-            "internal-type",
-            "internal",
-            ["parent-type", "sibling-type", "index-type"],
-            ["parent", "sibling", "index"],
-            "object",
-            "unknown",
-          ],
-          customGroups: { type: {}, value: {} },
-          environment: "node",
-        },
       ],
     },
   },
