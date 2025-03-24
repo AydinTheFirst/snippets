@@ -5,9 +5,11 @@ main.tsx
 import { routes } from "@generouted/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
-import { ErrorBoundaryLayout } from "@/components"; // this is optional
+import { ErrorBoundaryLayout } from "@/components/ErrorBoundary"; // this is optional
+
+// import "@/styles/tailwind.css";
 
 const router = createBrowserRouter([
   {
