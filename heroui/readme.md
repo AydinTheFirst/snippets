@@ -23,27 +23,33 @@ src/pages/_app.tsx
 ```js
 import { HeroUIProvider } from "@heroui/react";
 import { ThemeProvider } from "next-themes";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 export default function Layout() {
   return (
-    <_ThemeProvider>
-      <_HeroUIProvider>
+    <Theme_Provider>
+      <HeroUI_Provider>
         <Outlet />
-      </_HeroUIProvider>
-    </_ThemeProvider>
+      </HeroUI_Provider>
+    </Theme_Provider>
   );
 }
 
-function _ThemeProvider({ children }: React.PropsWithChildren) {
+function Theme_Provider({ children }: React.PropsWithChildren) {
   return <ThemeProvider attribute="class">{children}</ThemeProvider>;
 }
 
-function _HeroUIProvider({ children }: React.PropsWithChildren) {
+function HeroUI_Provider({ children }: React.PropsWithChildren) {
+  const navigate = useNavigate();
+  
   return (
-    <HeroUIProvider>
-      <ThemeProvider attribute="class">{children}</ThemeProvider>
+    <HeroUIProvider
+      navigate={navigate}
+      validationBehavior="native"
+    >
+      {children}
     </HeroUIProvider>
   );
 }
+
 ```
