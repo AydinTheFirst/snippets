@@ -1,5 +1,5 @@
 import { fixupPluginRules } from "@eslint/compat";
-import js from "@eslint/js";
+import eslint from "@eslint/js";
 import perfectionist from "eslint-plugin-perfectionist";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -7,7 +7,10 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist"] },
+  eslint.configs.recommended,
+  tseslint.configs.strict,
+  tseslint.configs.stylistic,
+  { ignores: ["dist"],files: ["**/*.{ts,tsx}"] },
   {
     files: ["**/*.{ts,tsx}"],
     plugins: {perfectionist},
@@ -16,11 +19,6 @@ export default tseslint.config(
     },
   },
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-    ],
-    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
