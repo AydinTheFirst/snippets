@@ -10,14 +10,17 @@ export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.strict,
   tseslint.configs.stylistic,
-  { ignores: ["dist"],files: ["**/*.{ts,tsx}"] },
+
+  { ignores: ["dist"], files: ["src/**/*.{ts,tsx}"] },
+
   {
     files: ["**/*.{ts,tsx}"],
-    plugins: {perfectionist},
+    plugins: { perfectionist },
     rules: {
       "perfectionist/sort-imports": ["error", { internalPattern: ["^@/.+"] }],
     },
   },
+
   {
     languageOptions: {
       ecmaVersion: 2020,
@@ -34,5 +37,5 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
     },
-  },
+  }
 );
