@@ -6,4 +6,6 @@ import "@/styles/globals.css";
 ```
 
 ### Upgrade to v4
-`npx @tailwindcss/upgrade`
+```
+npx @tailwindcss/upgrade
+```
