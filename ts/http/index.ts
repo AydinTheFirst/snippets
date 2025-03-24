@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-import { sleep } from "@/utils";
+import { sleep } from "@/lib/utils";
 
 const baseURL = import.meta.env.VITE_API_URL || "/api";
 
