@@ -5,3 +5,5 @@ main.tsx
 import "@/styles/globals.css";
 ```
 
+### Upgrade to v4
+`npx @tailwindcss/upgrade`
